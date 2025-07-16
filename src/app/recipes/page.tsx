@@ -4,24 +4,16 @@ import { useState } from 'react';
 import SearchBar from '../components/SearchBar';
 import RecipeCard from '../components/RecipeCard';
 import PageContainer from '../components/PageContainer';
-import { fetchRecipes } from 'lib/fetchRecipes';
-
-interface Meal {
-  idMeal: string;
-  strMeal: string;
-  strCategory: string;
-  strArea: string;
-  strInstructions: string;
-  strMealThumb: string;
-}
+import { fetchRecipes } from '../../lib/fetchRecipes';
+import { MealDBRecipe } from '../../types';
 
 export default function RecipesPage() {
-  const [recipes, setRecipes] = useState<Meal[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
-  const [searched, setSearched] = useState(false);
+  const [recipes, setRecipes] = useState<MealDBRecipe[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string>('');
+  const [searched, setSearched] = useState<boolean>(false);
 
-  const handleSearch = async (term: string) => {
+  const handleSearch = async (term: string): Promise<void> => {
     try {
       setLoading(true);
       setError('');
@@ -98,7 +90,7 @@ export default function RecipesPage() {
                 Found {recipes.length} recipe{recipes.length !== 1 ? 's' : ''}
               </h2>
               <div className="grid grid-cols-4 gap-6">
-                {recipes.map((meal: Meal) => (
+                {recipes.map((meal: MealDBRecipe) => (
                   <RecipeCard key={meal.idMeal} recipe={meal} />
                 ))}
               </div>

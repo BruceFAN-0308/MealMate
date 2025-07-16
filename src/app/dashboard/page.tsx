@@ -1,24 +1,17 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { supabase } from 'lib/supabase';
+import { supabase } from '../../lib/supabase';
 import Link from 'next/link';
 import PageContainer from '../components/PageContainer';
-
-interface Recipe {
-  id: string;
-  title: string;
-  image_url: string;
-  category: string;
-  origin: string;
-}
+import { SupabaseRecipe } from '../../types';
 
 export default function DashboardPage() {
-  const [recipes, setRecipes] = useState<Recipe[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [recipes, setRecipes] = useState<SupabaseRecipe[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    const fetchRecipes = async () => {
+    const fetchRecipes = async (): Promise<void> => {
       const { data, error } = await supabase.from('recipes').select('*');
       if (error) {
         console.error('Error fetching recipes:', error.message);
@@ -46,7 +39,7 @@ export default function DashboardPage() {
                 Manage and organize your personal recipes
               </p>
             </div>
-            <Link
+            <Link 
               href="/recipes/new"
               className="btn btn-primary btn-lg"
             >
@@ -72,7 +65,7 @@ export default function DashboardPage() {
               <p className="text-gray-600 dark:text-gray-400 mb-6">
                 Start building your recipe collection by adding your first recipe!
               </p>
-              <Link
+              <Link 
                 href="/recipes/new"
                 className="btn btn-primary btn-lg"
               >

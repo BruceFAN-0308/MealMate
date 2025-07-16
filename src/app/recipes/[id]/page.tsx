@@ -1,51 +1,46 @@
-import { supabase } from 'lib/supabase';
+import { supabase } from '../../../lib/supabase';
 import Link from 'next/link';
+import { RecipeDetailPageProps, SupabaseRecipe, MealDBResponse, MealDBRecipe } from '../../../types';
 
-interface SupabaseRecipe {
-  id: string;
-  title: string;
-  category: string;
-  origin: string;
-  instructions: string;
-  image_url: string;
-  ingredients: string[];
-}
-
-export default async function RecipeDetail({ params }: { params: { id: string } }) {
+export default async function RecipeDetail({ params }: RecipeDetailPageProps) {
   // 1. Try fetching from Supabase
-  const { data: sbRecipe, error } = await supabase
+  const { data: sbRecipe } = await supabase
     .from('recipes')
     .select('*')
     .eq('id', params.id)
     .single();
 
   if (sbRecipe) {
+    const recipe: SupabaseRecipe = sbRecipe;
+    
     return (
       <div className="p-4 max-w-3xl mx-auto text-white">
         <Link href="/recipes">
-          <button className="mb-6 px-4 py-2 bg-blue-600 rounded hover:bg-blue-700">← Back to Recipes</button>
+          <button className="mb-6 px-4 py-2 bg-blue-600 rounded hover:bg-blue-700">
+            ← Back to Recipes
+          </button>
         </Link>
 
         <div className="bg-gray-900 p-6 rounded-lg shadow-md">
-          <h1 className="text-3xl font-bold mb-2">{sbRecipe.title}</h1>
+          <h1 className="text-3xl font-bold mb-2">{recipe.title}</h1>
           <p className="text-gray-400 mb-4">
-            {sbRecipe.category} | {sbRecipe.origin}
+            {recipe.category} | {recipe.origin}
           </p>
-          {sbRecipe.image_url && (
+          {recipe.image_url && (
             <img
-              src={sbRecipe.image_url}
-              alt={sbRecipe.title}
+              src={recipe.image_url}
+              alt={recipe.title}
               className="rounded-lg w-full mb-6"
             />
           )}
           <h2 className="text-2xl font-semibold mb-2">Ingredients</h2>
           <ul className="list-disc list-inside mb-6 space-y-1">
-            {sbRecipe.ingredients?.map((item: string, index: number) => (
+            {recipe.ingredients?.map((item: string, index: number) => (
               <li key={index}>{item}</li>
             ))}
           </ul>
           <h2 className="text-2xl font-semibold mb-2">Instructions</h2>
-          <p className="whitespace-pre-line">{sbRecipe.instructions}</p>
+          <p className="whitespace-pre-line">{recipe.instructions}</p>
         </div>
       </div>
     );
@@ -53,8 +48,8 @@ export default async function RecipeDetail({ params }: { params: { id: string } 
 
   // 2. Fallback: Fetch from TheMealDB
   const res = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${params.id}`);
-  const data = await res.json();
-  const meal = data.meals?.[0];
+  const data: MealDBResponse = await res.json();
+  const meal: MealDBRecipe | null = data.meals?.[0] || null;
 
   if (!meal) {
     return <div className="p-4 text-red-600">Recipe not found.</div>;
@@ -62,10 +57,10 @@ export default async function RecipeDetail({ params }: { params: { id: string } 
 
   const ingredients: string[] = [];
   for (let i = 1; i <= 20; i++) {
-    const ing = meal[`strIngredient${i}`];
-    const measure = meal[`strMeasure${i}`];
+    const ing = meal[`strIngredient${i}` as keyof MealDBRecipe];
+    const measure = meal[`strMeasure${i}` as keyof MealDBRecipe];
     if (ing && ing.trim()) {
-      ingredients.push(`${measure?.trim()} ${ing.trim()}`);
+      ingredients.push(`${measure?.trim() || ''} ${ing.trim()}`.trim());
     }
   }
 

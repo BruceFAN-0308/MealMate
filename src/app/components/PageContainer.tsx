@@ -1,10 +1,5 @@
 import React from 'react';
-
-interface PageContainerProps {
-  children: React.ReactNode;
-  className?: string;
-  maxWidth?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '7xl';
-}
+import { PageContainerProps } from '../../types';
 
 export default function PageContainer({ 
   children, 
