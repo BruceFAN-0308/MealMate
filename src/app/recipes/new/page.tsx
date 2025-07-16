@@ -2,11 +2,12 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { supabase } from 'lib/supabase';
+import { supabase } from '../../../lib/supabase';
+import { NewRecipeForm, LoadingState } from '../../../types';
 
 export default function NewRecipePage() {
   const router = useRouter();
-  const [form, setForm] = useState({
+  const [form, setForm] = useState<NewRecipeForm>({
     title: '',
     category: '',
     origin: '',
@@ -15,20 +16,20 @@ export default function NewRecipePage() {
     ingredients: '',
   });
 
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
+  const [state, setState] = useState<LoadingState>({
+    loading: false,
+    error: '',
+    success: '',
+  });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
     const { name, value } = e.target;
     setForm(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
-    setLoading(true);
-    setError('');
-    setSuccess('');
+    setState(prev => ({ ...prev, loading: true, error: '', success: '' }));
 
     const ingredientsArray = form.ingredients
       .split(',')
@@ -42,13 +43,19 @@ export default function NewRecipePage() {
       },
     ]);
 
-    setLoading(false);
-
     if (error) {
       console.error(error);
-      setError('❌ Failed to create recipe. Please try again.');
+      setState(prev => ({ 
+        ...prev, 
+        loading: false, 
+        error: '❌ Failed to create recipe. Please try again.' 
+      }));
     } else {
-      setSuccess('✅ Recipe created successfully!');
+      setState(prev => ({ 
+        ...prev, 
+        loading: false, 
+        success: '✅ Recipe created successfully!' 
+      }));
       router.push('/dashboard');
     }
   };
@@ -57,8 +64,12 @@ export default function NewRecipePage() {
     <div className="max-w-xl mx-auto p-6 text-white">
       <h1 className="text-3xl font-bold mb-6 text-center">🍽️ Add New Recipe</h1>
 
-      {error && <p className="bg-red-100 text-red-800 p-2 rounded mb-4">{error}</p>}
-      {success && <p className="bg-green-100 text-green-800 p-2 rounded mb-4">{success}</p>}
+      {state.error && (
+        <p className="bg-red-100 text-red-800 p-2 rounded mb-4">{state.error}</p>
+      )}
+      {state.success && (
+        <p className="bg-green-100 text-green-800 p-2 rounded mb-4">{state.success}</p>
+      )}
 
       <form onSubmit={handleSubmit} className="space-y-4">
         {[
@@ -70,7 +81,7 @@ export default function NewRecipePage() {
           <input
             key={field.name}
             name={field.name}
-            value={(form as any)[field.name]}
+            value={form[field.name as keyof NewRecipeForm]}
             onChange={handleChange}
             placeholder={field.placeholder}
             required={field.required}
@@ -98,12 +109,12 @@ export default function NewRecipePage() {
 
         <button
           type="submit"
-          disabled={loading}
+          disabled={state.loading}
           className={`w-full py-3 text-white font-semibold rounded ${
-            loading ? 'bg-gray-500' : 'bg-blue-600 hover:bg-blue-700'
+            state.loading ? 'bg-gray-500' : 'bg-blue-600 hover:bg-blue-700'
           }`}
         >
-          {loading ? 'Submitting...' : '➕ Create Recipe'}
+          {state.loading ? 'Submitting...' : '➕ Create Recipe'}
         </button>
       </form>
     </div>

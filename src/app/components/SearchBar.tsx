@@ -1,11 +1,12 @@
 'use client';
 
 import { useState } from 'react';
+import { SearchBarProps } from '../../types';
 
-export default function SearchBar({ onSearch }: { onSearch: (term: string) => void }) {
-  const [term, setTerm] = useState("");
+export default function SearchBar({ onSearch }: SearchBarProps) {
+  const [term, setTerm] = useState<string>("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (term.trim()) {
       onSearch(term.trim());
