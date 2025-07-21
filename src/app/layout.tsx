@@ -1,8 +1,12 @@
+// app/layout.tsx
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+
+// Clerk
+import { ClerkProvider } from "@clerk/nextjs";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -17,7 +21,8 @@ const geistMono = localFont({
 
 export const metadata: Metadata = {
   title: "MealMate - Recipe Sharing Platform",
-  description: "Discover delicious recipes from around the world and create your own recipe collection. Built with Next.js, Supabase, and TailwindCSS.",
+  description:
+      "Discover delicious recipes from around the world and create your own recipe collection. Built with Next.js, Supabase, and TailwindCSS.",
   keywords: "recipes, cooking, food, sharing, recipe management",
   authors: [{ name: "MealMate Team" }],
   creator: "MealMate",
@@ -30,21 +35,23 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({
-  children,
-}: Readonly<{
+                                     children,
+                                   }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900`}
-      >
+      <ClerkProvider>
+        <html lang="en">
+        <body
+            className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900`}
+        >
+
+
         <Navbar />
-        <main className="flex-1">
-          {children}
-        </main>
+        <main className="flex-1">{children}</main>
         <Footer />
-      </body>
-    </html>
+        </body>
+        </html>
+      </ClerkProvider>
   );
 }
