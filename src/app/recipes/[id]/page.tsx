@@ -117,6 +117,25 @@ export default async function RecipeDetail({ params }: RecipeDetailPageProps) {
                 </div>
               </div>
 
+              {/* Video Section */}
+              {recipe.video_url && (
+                <div className="space-y-4">
+                  <div className="flex items-center space-x-2 border-b border-gray-200 dark:border-gray-700 pb-3">
+                    <span className="text-2xl">🎥</span>
+                    <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Video Tutorial</h2>
+                  </div>
+                  
+                  <div className="relative overflow-hidden rounded-xl shadow-lg border border-gray-200 dark:border-gray-700">
+                    <iframe
+                      className="w-full aspect-video"
+                      src={`https://www.youtube.com/embed/${new URL(recipe.video_url).searchParams.get('v')}`}
+                      allowFullScreen
+                      title={`${recipe.title} Tutorial`}
+                    ></iframe>
+                  </div>
+                </div>
+              )}
+
             </div>
           </div>
 

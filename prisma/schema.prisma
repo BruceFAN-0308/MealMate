@@ -20,6 +20,7 @@ model Recipe {
   origin       String
   instructions String   @db.Text
   image_url    String
+  video_url    String?
   ingredients  String[] @db.Text
   created_at   DateTime @default(now()) @map("created_at")
   updated_at   DateTime @default(now()) @updatedAt @map("updated_at")

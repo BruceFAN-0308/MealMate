@@ -80,6 +80,7 @@ export interface SupabaseRecipe {
   origin: string;
   instructions: string;
   image_url: string;
+  video_url?: string;
   ingredients: string[];
   created_at?: string;
   updated_at?: string;
@@ -91,6 +92,7 @@ export interface CreateRecipeRequest {
   origin: string;
   instructions: string;
   image_url: string;
+  video_url?: string;
   ingredients: string[];
 }
 
