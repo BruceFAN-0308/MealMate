@@ -18,7 +18,6 @@ export default function Navbar() {
     { href: '/recipes', label: 'Browse Recipes', icon: '🔍' },
     { href: '/meal-plans', label: 'Meal Plans', icon: '📅' },
     { href: '/dashboard', label: 'My Dashboard', icon: '📋' },
-    { href: '/recipes/new', label: 'Add Recipe', icon: '➕' },
   ];
 
   return (
@@ -56,7 +55,7 @@ export default function Navbar() {
             {/* Auth Buttons */}
             <div className="flex items-center gap-3">
               <SignedOut>
-                <SignInButton 
+                <SignInButton
                   mode="modal"
                   forceRedirectUrl="/dashboard"
                 >
@@ -70,7 +69,7 @@ export default function Navbar() {
                     <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-opacity duration-200"></div>
                   </div>
                 </SignInButton>
-                <SignUpButton 
+                <SignUpButton
                   mode="modal"
                   forceRedirectUrl="/dashboard"
                 >
@@ -90,8 +89,8 @@ export default function Navbar() {
                   <div className="hidden sm:block text-sm text-gray-600 dark:text-gray-300">
                     Welcome back!
                   </div>
-                  <UserButton 
-                    afterSignOutUrl="/" 
+                  <UserButton
+                    afterSignOutUrl="/"
                     appearance={{
                       elements: {
                         avatarBox: "w-10 h-10 rounded-full ring-2 ring-purple-500 ring-offset-2 hover:ring-purple-600 transition-all duration-200"
@@ -106,4 +105,4 @@ export default function Navbar() {
       </div>
     </nav>
   );
-} 
+}
