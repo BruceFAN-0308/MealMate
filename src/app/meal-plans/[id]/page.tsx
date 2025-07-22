@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import { supabase } from '../../../lib/supabase';
 import PageContainer from '../../components/PageContainer';
 import Link from 'next/link';
@@ -9,16 +9,20 @@ import { MealPlan, PlannedMeal, SupabaseRecipe } from '../../../types';
 
 export default function MealPlanDetailPage() {
   const params = useParams();
-  const router = useRouter();
   const [mealPlan, setMealPlan] = useState<MealPlan | null>(null);
   const [plannedMeals, setPlannedMeals] = useState<PlannedMeal[]>([]);
   const [recipes, setRecipes] = useState<SupabaseRecipe[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [showAddMealForm, setShowAddMealForm] = useState<boolean>(false);
   const [selectedDate, setSelectedDate] = useState<string>('');
-  const [newMeal, setNewMeal] = useState({
+  const [newMeal, setNewMeal] = useState<{
+    recipe_id: string;
+    meal_type: 'breakfast' | 'lunch' | 'dinner' | 'snack';
+    servings: number;
+    notes: string;
+  }>({
     recipe_id: '',
-    meal_type: 'breakfast' as const,
+    meal_type: 'breakfast',
     servings: 1,
     notes: ''
   });
@@ -65,16 +69,12 @@ export default function MealPlanDetailPage() {
     const dates = [];
     const current = new Date(startDate);
     const end = new Date(endDate);
-    
+
     while (current <= end) {
       dates.push(new Date(current).toISOString().split('T')[0]);
       current.setDate(current.getDate() + 1);
     }
     return dates;
-  };
-
-  const getMealsForDate = (date: string) => {
-    return plannedMeals.filter(meal => meal.date === date);
   };
 
   const getMealsByType = (date: string, mealType: string) => {
@@ -156,7 +156,7 @@ export default function MealPlanDetailPage() {
               Meal Plan Not Found
             </h3>
             <p className="text-gray-600 dark:text-gray-400 mb-6">
-              The meal plan you're looking for doesn't exist or has been removed.
+              The meal plan you&apos;re looking for doesn&apos;t exist or has been removed.
             </p>
             <Link href="/meal-plans" className="btn btn-primary">
               Back to Meal Plans
@@ -177,8 +177,8 @@ export default function MealPlanDetailPage() {
           <div className="flex items-center justify-between mb-8">
             <div>
               <div className="flex items-center mb-2">
-                <Link 
-                  href="/meal-plans" 
+                <Link
+                  href="/meal-plans"
                   className="text-blue-600 hover:text-blue-700 mr-3"
                 >
                   ← Back to Meal Plans
@@ -236,7 +236,7 @@ export default function MealPlanDetailPage() {
                     </label>
                     <select
                       value={newMeal.meal_type}
-                      onChange={(e) => setNewMeal({...newMeal, meal_type: e.target.value as any})}
+                      onChange={(e) => setNewMeal({...newMeal, meal_type: e.target.value as typeof newMeal.meal_type})}
                       className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                     >
                       <option value="breakfast">🥞 Breakfast</option>
@@ -295,7 +295,6 @@ export default function MealPlanDetailPage() {
           {/* Calendar View */}
           <div className="grid grid-cols-1 lg:grid-cols-7 gap-4">
             {dates.map(date => {
-              const dayMeals = getMealsForDate(date);
               const isToday = date === new Date().toISOString().split('T')[0];
               const dayName = new Date(date).toLocaleDateString('en-US', { weekday: 'short' });
               const dayNumber = new Date(date).getDate();
@@ -387,4 +386,4 @@ export default function MealPlanDetailPage() {
       </PageContainer>
     </div>
   );
-} 
+}
