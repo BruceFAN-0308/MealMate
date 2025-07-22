@@ -6,7 +6,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "db:generate": "prisma generate",
+    "db:push": "prisma db push",
+    "db:migrate": "prisma migrate dev",
+    "db:studio": "prisma studio",
+    "db:setup": "node setup-database.js"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.25.4",
@@ -16,12 +21,14 @@
     "react-dom": "^18"
   },
   "devDependencies": {
+    "@prisma/client": "^6.12.0",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "eslint": "^8",
     "eslint-config-next": "14.2.28",
     "postcss": "^8",
+    "prisma": "^6.12.0",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
   }

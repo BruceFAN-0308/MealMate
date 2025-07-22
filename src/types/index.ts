@@ -143,6 +143,47 @@ export interface LoadingState {
   success: string;
 }
 
+// Meal Plan Types
+export interface MealPlan {
+  id: string;
+  user_id: string;
+  name: string;
+  description?: string;
+  start_date: string;
+  end_date: string;
+  meals: PlannedMeal[];
+  created_at?: string;
+  updated_at?: string;
+}
+
+export interface PlannedMeal {
+  id: string;
+  meal_plan_id: string;
+  recipe_id: string;
+  recipe?: SupabaseRecipe;
+  date: string;
+  meal_type: 'breakfast' | 'lunch' | 'dinner' | 'snack';
+  servings: number;
+  notes?: string;
+  created_at?: string;
+}
+
+export interface CreateMealPlanRequest {
+  name: string;
+  description?: string;
+  start_date: string;
+  end_date: string;
+}
+
+export interface CreatePlannedMealRequest {
+  meal_plan_id: string;
+  recipe_id: string;
+  date: string;
+  meal_type: 'breakfast' | 'lunch' | 'dinner' | 'snack';
+  servings: number;
+  notes?: string;
+}
+
 // Database Table Types (for Supabase)
 export interface Database {
   public: {
@@ -151,6 +192,16 @@ export interface Database {
         Row: SupabaseRecipe;
         Insert: CreateRecipeRequest;
         Update: Partial<CreateRecipeRequest>;
+      };
+      meal_plans: {
+        Row: MealPlan;
+        Insert: CreateMealPlanRequest;
+        Update: Partial<CreateMealPlanRequest>;
+      };
+      planned_meals: {
+        Row: PlannedMeal;
+        Insert: CreatePlannedMealRequest;
+        Update: Partial<CreatePlannedMealRequest>;
       };
     };
   };

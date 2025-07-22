@@ -1,0 +1,74 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// Existing Recipe model
+model Recipe {
+  id           String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  title        String
+  category     String
+  origin       String
+  instructions String   @db.Text
+  image_url    String
+  ingredients  String[] @db.Text
+  created_at   DateTime @default(now()) @map("created_at")
+  updated_at   DateTime @default(now()) @updatedAt @map("updated_at")
+
+  // Relations
+  planned_meals PlannedMeal[]
+
+  @@map("recipes")
+}
+
+// Meal Plan model
+model MealPlan {
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  user_id     String   @map("user_id")
+  name        String
+  description String?
+  start_date  DateTime @map("start_date") @db.Date
+  end_date    DateTime @map("end_date") @db.Date
+  created_at  DateTime @default(now()) @map("created_at")
+  updated_at  DateTime @default(now()) @updatedAt @map("updated_at")
+
+  // Relations
+  planned_meals PlannedMeal[]
+
+  @@map("meal_plans")
+}
+
+// Planned Meal model
+model PlannedMeal {
+  id           String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  meal_plan_id String   @map("meal_plan_id") @db.Uuid
+  recipe_id    String   @map("recipe_id") @db.Uuid
+  date         DateTime @db.Date
+  meal_type    MealType @map("meal_type")
+  servings     Int      @default(1)
+  notes        String?
+  created_at   DateTime @default(now()) @map("created_at")
+
+  // Relations
+  meal_plan MealPlan @relation(fields: [meal_plan_id], references: [id], onDelete: Cascade)
+  recipe    Recipe   @relation(fields: [recipe_id], references: [id], onDelete: Cascade)
+
+  @@map("planned_meals")
+}
+
+// Enum for meal types
+enum MealType {
+  breakfast
+  lunch
+  dinner
+  snack
+}

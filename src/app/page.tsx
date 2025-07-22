@@ -13,7 +13,7 @@ export default function Home() {
             Discover delicious recipes from around the world or create and manage your own culinary masterpieces!
           </p>
 
-          <div className="grid grid-cols-3 gap-6 mb-12">
+          <div className="grid grid-cols-4 gap-6 mb-12">
             <Link
               href="/recipes"
               className="group card p-6 hover:shadow-lg transition-all duration-200 hover:scale-105"
@@ -22,6 +22,17 @@ export default function Home() {
               <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">Browse Recipes</h3>
               <p className="text-gray-600 dark:text-gray-400">
                 Explore thousands of recipes from different cuisines
+              </p>
+            </Link>
+            
+            <Link
+              href="/meal-plans"
+              className="group card p-6 hover:shadow-lg transition-all duration-200 hover:scale-105"
+            >
+              <div className="text-4xl mb-4 group-hover:scale-110 transition-transform">📅</div>
+              <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">Meal Plans</h3>
+              <p className="text-gray-600 dark:text-gray-400">
+                Plan your weekly meals and organize your cooking schedule
               </p>
             </Link>
             
@@ -56,10 +67,10 @@ export default function Home() {
               Get Started
             </Link>
             <Link
-              href="/dashboard"
+              href="/meal-plans"
               className="btn btn-outline btn-lg px-8 py-3 text-lg font-semibold"
             >
-              View Dashboard
+              Plan Your Meals
             </Link>
           </div>
 

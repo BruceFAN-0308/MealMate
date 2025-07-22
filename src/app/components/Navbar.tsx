@@ -16,6 +16,7 @@ export default function Navbar() {
   const navLinks = [
     { href: '/', label: 'Home', icon: '🏠' },
     { href: '/recipes', label: 'Browse Recipes', icon: '🔍' },
+    { href: '/meal-plans', label: 'Meal Plans', icon: '📅' },
     { href: '/dashboard', label: 'My Dashboard', icon: '📋' },
     { href: '/recipes/new', label: 'Add Recipe', icon: '➕' },
   ];
