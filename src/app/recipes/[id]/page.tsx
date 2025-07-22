@@ -149,7 +149,7 @@ export default async function RecipeDetail({ params }: RecipeDetailPageProps) {
         <div className="text-center">
           <div className="text-6xl mb-4">😔</div>
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Recipe Not Found</h1>
-          <p className="text-gray-600 dark:text-gray-400 mb-6">The recipe you're looking for doesn't exist.</p>
+          <p className="text-gray-600 dark:text-gray-400 mb-6">The recipe you are looking for does not exist.</p>
           <Link href="/recipes">
             <div className="inline-block px-6 py-3 bg-gradient-to-r from-orange-500 to-amber-600 hover:from-orange-600 hover:to-amber-700 text-white rounded-lg shadow-md hover:shadow-lg transition-all duration-200 transform hover:scale-105">
               Browse Recipes
