@@ -62,9 +62,28 @@ export default function Footer() {
         {/* Copyright */}
         <div className="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
           <p className="text-center text-sm text-gray-600 dark:text-gray-400">
-            © 2025 MealMate. Made by BruceFan and Ernest for better cooking experiences.
+            © 2025 MealMate. Made by{' '}
+            <a
+                href="https://www.linkedin.com/in/bruce--fan"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600 dark:text-blue-400 hover:underline"
+            >
+              BruceFan
+            </a>{' '}
+            and{' '}
+            <a
+                href="https://www.linkedin.com/in/ernest-san-luis"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600 dark:text-blue-400 hover:underline"
+            >
+              Ernest
+            </a>{' '}
+            for better cooking experiences.
           </p>
         </div>
+
       </div>
     </footer>
   );
