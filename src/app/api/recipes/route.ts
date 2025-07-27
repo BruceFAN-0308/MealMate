@@ -84,3 +84,42 @@ export async function POST(request: NextRequest) {
     );
   }
 }
+
+export async function DELETE(request: NextRequest) {
+  try {
+    const url = new URL(request.url);
+    const id = url.searchParams.get('id');
+
+    if (!id) {
+      return NextResponse.json(
+        { error: 'Recipe ID is required' },
+        { status: 400 }
+      );
+    }
+
+    // 删除菜谱
+    const { error } = await supabase
+      .from('recipes')
+      .delete()
+      .eq('id', id);
+
+    if (error) {
+      console.error('Error deleting recipe:', error);
+      return NextResponse.json(
+        { error: 'Failed to delete recipe' },
+        { status: 500 }
+      );
+    }
+
+    return NextResponse.json({
+      message: 'Recipe deleted successfully'
+    });
+
+  } catch (error) {
+    console.error('Error in DELETE /api/recipes:', error);
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
+  }
+}
