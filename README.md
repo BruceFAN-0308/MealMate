@@ -23,6 +23,27 @@ pnpm dev
 # or
 bun dev
 
+Then open http://localhost:3000 in your browser to see the app running.
+
+
+
+🛠️ Technologies Used
+Next.js 14 – React framework for hybrid static & server rendering
+
+React.js – UI library
+
+Tailwind CSS – Utility-first CSS framework
+
+Supabase – Backend-as-a-Service (PostgreSQL + Auth + Storage)
+
+PostgreSQL – Relational database
+
+Clerk – User authentication and session management
+
+TypeScript – Strongly typed JavaScript
+
+Shadcn UI – Headless components with Tailwind
+
 
 
 
