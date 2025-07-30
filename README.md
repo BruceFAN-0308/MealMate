@@ -2,23 +2,29 @@
 Meal Mate is a full-stack web application built with Next.js, designed to help users discover, create, and manage recipes and meal plans. Whether you're a home cook or a foodie exploring new dishes, Meal Mate provides an easy-to-use platform for personalized meal organization.
 
 
-🚀 Getting Started
-Clone the repository and install the dependencies:
-
-bash
-Copy
-Edit
-git clone https://github.com/ernestsanluis/MealMate.git
-cd MealMate
-npm install
+## 🚀 Getting Started
+## Clone the repository and install the dependencies:
 
 
+`git clone https://github.com/ernestsanluis/MealMate.git`
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+`cd MealMate`
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+`npm install`
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+
+## Run the development server:
+
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
+
+
+
 
 ## Learn More
 
