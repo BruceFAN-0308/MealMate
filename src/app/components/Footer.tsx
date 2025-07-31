@@ -78,7 +78,7 @@ export default function Footer() {
                 rel="noopener noreferrer"
                 className="text-blue-600 dark:text-blue-400 hover:underline"
             >
-              Ernest
+              Ernest San Luis
             </a>{' '}
             for better cooking experiences.
           </p>
