@@ -13,15 +13,7 @@ Meal Mate is a full-stack web application built with Next.js, designed to help u
 `npm install`
 
 
-## Run the development server:
 
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 
 Then open http://localhost:3000 in your browser to see the app running.
 
@@ -42,7 +34,7 @@ Clerk – User authentication and session management
 
 TypeScript – Strongly typed JavaScript
 
-Shadcn UI – Headless components with Tailwind
+Prisma ORM – Type-safe, modern ORM to interact with the PostgreSQL database
 
 
 ✨ Features
